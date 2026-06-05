@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!--
+    Why no <title>?
+    Popups don't show a title bar, so a <title> tag is unnecessary here.
+    But we still use lang="en" and charset for good practice.
+  -->
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- Header section with the extension name -->
+  <header class="header">
+    <h1 class="header__title">AutoCollapse</h1>
+    <p class="header__subtitle">Tab Group Manager</p>
+  </header>
+
+  <!-- Main content area — buttons will go here in Milestone 2 & 3 -->
+  <main class="content">
+    <p class="content__status" id="status-text">
+      ✅ Extension is active
+    </p>
+  </main>
+
+  <!-- Footer with version info -->
+  <footer class="footer">
+    <span class="footer__version" id="version-text"></span>
+  </footer>
+
+  <!--
+    IMPORTANT: No inline scripts allowed in Chrome Extensions!
+    ❌ <script>console.log('hello')</script>     — CSP blocks this
+    ❌ <button onclick="doStuff()">              — CSP blocks this too
+    ✅ <script src="popup.js"></script>           — External file, this works
+  -->
+  <script src="popup.js"></script>
+</body>
+</html>

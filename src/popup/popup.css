@@ -1,0 +1,139 @@
+/*
+ * AutoCollapse — Popup Styles
+ *
+ * NAMING CONVENTION: BEM (Block__Element--Modifier)
+ *   - .header          → Block (a standalone component)
+ *   - .header__title   → Element (a part of the block)
+ *   - .btn--primary    → Modifier (a variation of the block)
+ *
+ * WHY BEM?
+ *   It prevents CSS class name collisions as the project grows.
+ *   When you have 10+ components, generic names like ".title" will clash.
+ *   ".header__title" is specific and self-documenting.
+ *
+ * COLOR PALETTE (CSS Custom Properties / Variables):
+ *   We define colors once here, and reuse them everywhere.
+ *   If we want to change the theme later, we only change these values.
+ */
+
+/* ============================================
+   CSS Custom Properties (Design Tokens)
+   ============================================ */
+:root {
+  /* Colors */
+  --color-bg-primary: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-bg-surface: #334155;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-accent: #60a5fa;
+  --color-accent-glow: rgba(96, 165, 250, 0.15);
+  --color-success: #34d399;
+  --color-success-glow: rgba(52, 211, 153, 0.15);
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+
+  /* Typography */
+  --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-size-sm: 11px;
+  --font-size-base: 13px;
+  --font-size-lg: 18px;
+
+  /* Borders & Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+}
+
+/* ============================================
+   Base Reset
+   ============================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  /* Set the popup dimensions — Chrome enforces max 800x600 */
+  width: 320px;
+  min-height: 160px;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  padding: var(--space-lg);
+  /* Prevent the ugly scrollbar flash */
+  overflow: hidden;
+}
+
+/* ============================================
+   Header
+   ============================================ */
+.header {
+  margin-bottom: var(--space-lg);
+}
+
+.header__title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  /* Gradient text effect */
+  background: linear-gradient(135deg, var(--color-accent), #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+}
+
+.header__subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-xs);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ============================================
+   Content Area
+   ============================================ */
+.content {
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  border: 1px solid var(--color-bg-surface);
+}
+
+.content__status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--color-success);
+  font-weight: 500;
+  /* Subtle glow behind the status */
+  text-shadow: 0 0 20px var(--color-success-glow);
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+.footer {
+  margin-top: var(--space-lg);
+  text-align: center;
+}
+
+.footer__version {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  opacity: 0.6;
+}

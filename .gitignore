@@ -1,0 +1,30 @@
+# Dependencies & package manager artifacts
+node_modules/
+package-lock.json
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build artifacts (for future use)
+dist/
+build/
+
+# Environment & secrets (never commit these)
+.env
+.env.local
+*.key
+*.pem
+
+# Chrome Web Store artifacts (will contain store-specific metadata)
+CHROMEWEBSTORE.md
+
+# Zip packages created for store upload
+*.zip
