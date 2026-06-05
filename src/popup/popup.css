@@ -125,6 +125,105 @@ body {
 }
 
 /* ============================================
+   Group Count
+   ============================================ */
+.content__group-count {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.content__group-count__number {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* ============================================
+   Action Buttons
+   ============================================ */
+.content__actions {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.btn {
+  flex: 1;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-normal),
+    opacity var(--transition-fast);
+  /* Prevent text selection on rapid clicks */
+  user-select: none;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Primary button — gradient with glow on hover */
+.btn--primary {
+  background: linear-gradient(135deg, var(--color-accent), #a78bfa);
+  color: #0f172a;
+  box-shadow: 0 2px 8px var(--color-accent-glow);
+}
+
+.btn--primary:hover:not(:disabled) {
+  box-shadow: 0 4px 20px var(--color-accent-glow),
+              0 0 40px var(--color-accent-glow);
+}
+
+/* Secondary button — outline style */
+.btn--secondary {
+  background: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-bg-surface);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: var(--color-bg-surface);
+  border-color: var(--color-accent);
+}
+
+/* ============================================
+   Action Status Message
+   ============================================ */
+.content__action-status {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  min-height: 18px; /* Prevent layout shift when empty */
+  animation: fadeIn var(--transition-normal);
+}
+
+.content__action-status--success {
+  color: var(--color-success);
+}
+
+.content__action-status--error {
+  color: #fbbf24; /* Amber warning color */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
    Footer
    ============================================ */
 .footer {

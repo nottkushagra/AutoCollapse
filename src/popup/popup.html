@@ -16,11 +16,25 @@
     <p class="header__subtitle">Tab Group Manager</p>
   </header>
 
-  <!-- Main content area — buttons will go here in Milestone 2 & 3 -->
+  <!-- Main content area — group info and action buttons -->
   <main class="content">
-    <p class="content__status" id="status-text">
-      ✅ Extension is active
+    <!-- Live count of tab groups -->
+    <p class="content__group-count" id="group-count">
+      Loading...
     </p>
+
+    <!-- Action buttons -->
+    <div class="content__actions">
+      <button class="btn btn--primary" id="btn-collapse-all">
+        Collapse All
+      </button>
+      <button class="btn btn--secondary" id="btn-expand-all">
+        Expand All
+      </button>
+    </div>
+
+    <!-- Status message (shows result of last action) -->
+    <p class="content__action-status" id="action-status"></p>
   </main>
 
   <!-- Footer with version info -->
