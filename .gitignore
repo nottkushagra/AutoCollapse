@@ -28,3 +28,6 @@ CHROMEWEBSTORE.md
 
 # Zip packages created for store upload
 *.zip
+
+# Personal documentation (local learning resources, not committed)
+docs/
