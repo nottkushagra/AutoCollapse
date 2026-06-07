@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa"/>
+      <stop offset="100%" style="stop-color:#a78bfa"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <!-- Collapsed stack icon: three horizontal bars with descending opacity -->
+  <rect x="30" y="36" width="68" height="12" rx="6" fill="white" opacity="0.95" filter="url(#shadow)"/>
+  <rect x="30" y="58" width="68" height="12" rx="6" fill="white" opacity="0.7" filter="url(#shadow)"/>
+  <rect x="30" y="80" width="68" height="12" rx="6" fill="white" opacity="0.45" filter="url(#shadow)"/>
+</svg>

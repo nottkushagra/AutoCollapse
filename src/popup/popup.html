@@ -2,52 +2,133 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <!--
-    Why no <title>?
-    Popups don't show a title bar, so a <title> tag is unnecessary here.
-    But we still use lang="en" and charset for good practice.
-  -->
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <!-- Header section with the extension name -->
+  <!-- Header -->
   <header class="header">
     <h1 class="header__title">AutoCollapse</h1>
     <p class="header__subtitle">Tab Group Manager</p>
   </header>
 
-  <!-- Main content area — group info and action buttons -->
-  <main class="content">
-    <!-- Live count of tab groups -->
-    <p class="content__group-count" id="group-count">
-      Loading...
-    </p>
+  <!-- Tab Navigation -->
+  <nav class="tab-nav" id="tab-nav">
+    <button class="tab-nav__btn tab-nav__btn--active" data-tab="main" id="tab-btn-main">
+      Main
+    </button>
+    <button class="tab-nav__btn" data-tab="analytics" id="tab-btn-analytics">
+      Analytics
+    </button>
+  </nav>
 
-    <!-- Action buttons -->
-    <div class="content__actions">
-      <button class="btn btn--primary" id="btn-collapse-all">
-        Collapse All
-      </button>
-      <button class="btn btn--secondary" id="btn-expand-all">
-        Expand All
-      </button>
+  <!-- ═══════ TAB: Main ═══════ -->
+  <div class="tab-content tab-content--active" id="tab-main">
+
+    <!-- Group count + quick actions -->
+    <section class="content">
+      <p class="content__group-count" id="group-count">Loading...</p>
+      <div class="content__actions">
+        <button class="btn btn--primary" id="btn-collapse-all">Collapse All</button>
+        <button class="btn btn--secondary" id="btn-expand-all">Expand All</button>
+      </div>
+      <p class="content__status" id="action-status"></p>
+    </section>
+
+    <!-- Settings -->
+    <section class="settings">
+      <h2 class="settings__heading">Settings</h2>
+
+      <!-- Enable/Disable AutoCollapse -->
+      <label class="toggle" for="setting-auto-collapse">
+        <div class="toggle__text">
+          <span class="toggle__label">AutoCollapse</span>
+          <span class="toggle__desc">Automatically collapse inactive groups</span>
+        </div>
+        <div class="toggle__switch">
+          <input type="checkbox" id="setting-auto-collapse">
+          <span class="toggle__slider"></span>
+        </div>
+      </label>
+
+      <!-- Enable/Disable Timer -->
+      <label class="toggle" for="setting-timer-enabled">
+        <div class="toggle__text">
+          <span class="toggle__label">Inactivity Timer</span>
+          <span class="toggle__desc">Collapse all groups after idle period</span>
+        </div>
+        <div class="toggle__switch">
+          <input type="checkbox" id="setting-timer-enabled">
+          <span class="toggle__slider"></span>
+        </div>
+      </label>
+
+      <!-- Timer Value + Unit (shown when timer is enabled) -->
+      <div class="settings__timer-row settings__timer-row--hidden" id="timer-row">
+        <label class="settings__timer-label" for="setting-timer-value">
+          Collapse after:
+        </label>
+        <input
+          type="number"
+          id="setting-timer-value"
+          class="settings__number-input"
+          min="1"
+          max="999"
+          value="5"
+        >
+        <select id="setting-timer-unit" class="settings__select">
+          <option value="seconds">seconds</option>
+          <option value="minutes" selected>minutes</option>
+        </select>
+      </div>
+
+      <!-- Restore Defaults + Save -->
+      <div class="settings__buttons">
+        <button class="btn btn--outline" id="btn-restore-defaults">
+          Restore Defaults
+        </button>
+        <button class="btn btn--save" id="btn-save">
+          Save
+        </button>
+      </div>
+
+      <!-- Status message -->
+      <p class="settings__status" id="settings-status"></p>
+    </section>
+  </div>
+
+  <!-- ═══════ TAB: Analytics ═══════ -->
+  <div class="tab-content" id="tab-analytics">
+    <div class="analytics__cards">
+      <div class="stat-card">
+        <span class="stat-card__value" id="stat-switches-value">0</span>
+        <span class="stat-card__label">Tab Switches</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__value" id="stat-collapses-value">0</span>
+        <span class="stat-card__label">Groups Collapsed</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__value stat-card__value--text" id="stat-top-group-value">—</span>
+        <span class="stat-card__label">Most Used Group</span>
+      </div>
     </div>
 
-    <!-- Status message (shows result of last action) -->
-    <p class="content__action-status" id="action-status"></p>
-  </main>
+    <section class="analytics__chart-section">
+      <h3 class="analytics__chart-title">Last 7 Days</h3>
+      <div class="analytics__chart" id="activity-chart"></div>
+    </section>
 
-  <!-- Footer with version info -->
+    <div class="analytics__actions">
+      <button class="btn btn--danger" id="btn-reset-stats">Reset All Stats</button>
+      <p class="analytics__reset-status" id="reset-status"></p>
+    </div>
+  </div>
+
+  <!-- Footer -->
   <footer class="footer">
     <span class="footer__version" id="version-text"></span>
   </footer>
 
-  <!--
-    IMPORTANT: No inline scripts allowed in Chrome Extensions!
-    ❌ <script>console.log('hello')</script>     — CSP blocks this
-    ❌ <button onclick="doStuff()">              — CSP blocks this too
-    ✅ <script src="popup.js"></script>           — External file, this works
-  -->
   <script src="popup.js"></script>
 </body>
 </html>

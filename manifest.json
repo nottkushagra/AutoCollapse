@@ -1,16 +1,29 @@
 {
   "manifest_version": 3,
   "name": "AutoCollapse",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Automatically collapse inactive tab groups when you switch between them.",
   "permissions": [
-    "tabGroups"
+    "tabGroups",
+    "tabs",
+    "storage",
+    "alarms"
   ],
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "48": "assets/icons/icon-48.png",
+    "128": "assets/icons/icon-128.png"
+  },
   "background": {
     "service_worker": "src/background/service-worker.js"
   },
   "action": {
     "default_popup": "src/popup/popup.html",
-    "default_title": "AutoCollapse — Tab Group Manager"
+    "default_title": "AutoCollapse — Tab Group Manager",
+    "default_icon": {
+      "16": "assets/icons/icon-16.png",
+      "48": "assets/icons/icon-48.png",
+      "128": "assets/icons/icon-128.png"
+    }
   }
 }
