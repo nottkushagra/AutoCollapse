@@ -1,3 +1,21 @@
+<!--
+  AutoCollapse — Popup HTML
+
+  This is the structure of the popup window that appears when the user
+  clicks the AutoCollapse icon in the Chrome toolbar.
+
+  KEY CONCEPTS FOR BEGINNERS:
+  - This popup only exists while it's visible. Close it? It's destroyed.
+    Open it again? Created from scratch. That's why we load settings from
+    chrome.storage every time it opens.
+  - The popup CAN access Chrome APIs (unlike normal web pages).
+  - It shares chrome.storage with the service worker.
+  - The <script> tag is at the bottom so the DOM is ready when JS runs.
+  - BEM naming convention is used for CSS classes:
+    Block: .header
+    Element: .header__title (title inside header)
+    Modifier: .tab-nav__btn--active (active variant of button)
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,13 +23,17 @@
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <!-- Header -->
+  <!-- Header — Shows the extension name and subtitle -->
   <header class="header">
     <h1 class="header__title">AutoCollapse</h1>
     <p class="header__subtitle">Tab Group Manager</p>
   </header>
 
-  <!-- Tab Navigation -->
+  <!--
+    Tab Navigation — Switches between Main and Analytics views.
+    The data-tab attribute tells JavaScript which content panel to show.
+    Only one tab has the --active modifier at a time.
+  -->
   <nav class="tab-nav" id="tab-nav">
     <button class="tab-nav__btn tab-nav__btn--active" data-tab="main" id="tab-btn-main">
       Main
@@ -22,23 +44,37 @@
   </nav>
 
   <!-- ═══════ TAB: Main ═══════ -->
+  <!-- The --active modifier controls visibility (display: block vs none) -->
   <div class="tab-content tab-content--active" id="tab-main">
 
-    <!-- Group count + quick actions -->
+    <!--
+      Group Count & Quick Actions
+      Shows how many tab groups exist and provides manual collapse/expand buttons.
+    -->
     <section class="content">
       <p class="content__group-count" id="group-count">Loading...</p>
       <div class="content__actions">
         <button class="btn btn--primary" id="btn-collapse-all">Collapse All</button>
         <button class="btn btn--secondary" id="btn-expand-all">Expand All</button>
       </div>
+      <!-- Status message area — shows feedback like "Collapsed 3 groups" -->
       <p class="content__status" id="action-status"></p>
     </section>
 
-    <!-- Settings -->
+    <!--
+      Settings Section
+      Contains toggle switches and configuration inputs.
+      Changes are NOT auto-saved — user must click "Save".
+    -->
     <section class="settings">
       <h2 class="settings__heading">Settings</h2>
 
-      <!-- Enable/Disable AutoCollapse -->
+      <!--
+        AutoCollapse Toggle
+        The <label> wraps the entire row — clicking anywhere toggles the checkbox.
+        The checkbox (<input>) is hidden with CSS; the visual toggle is the <span>.
+        CSS uses :checked pseudo-class to style the toggle differently when on/off.
+      -->
       <label class="toggle" for="setting-auto-collapse">
         <div class="toggle__text">
           <span class="toggle__label">AutoCollapse</span>
@@ -50,7 +86,7 @@
         </div>
       </label>
 
-      <!-- Enable/Disable Timer -->
+      <!-- Inactivity Timer Toggle — same pattern as above -->
       <label class="toggle" for="setting-timer-enabled">
         <div class="toggle__text">
           <span class="toggle__label">Inactivity Timer</span>
@@ -62,7 +98,12 @@
         </div>
       </label>
 
-      <!-- Timer Value + Unit (shown when timer is enabled) -->
+      <!--
+        Timer Configuration Row
+        Only visible when the timer toggle is ON.
+        The --hidden modifier class hides it with CSS (max-height: 0, opacity: 0).
+        JavaScript removes/adds this class when the timer toggle changes.
+      -->
       <div class="settings__timer-row settings__timer-row--hidden" id="timer-row">
         <label class="settings__timer-label" for="setting-timer-value">
           Collapse after:
@@ -81,7 +122,12 @@
         </select>
       </div>
 
-      <!-- Restore Defaults + Save -->
+      <!--
+        Action Buttons
+        "Restore Defaults" resets the FORM to defaults but does NOT save.
+        The user must click "Save" to persist changes.
+        This two-step process prevents accidental changes.
+      -->
       <div class="settings__buttons">
         <button class="btn btn--outline" id="btn-restore-defaults">
           Restore Defaults
@@ -91,13 +137,18 @@
         </button>
       </div>
 
-      <!-- Status message -->
+      <!-- Settings status message — shows "Settings saved" or error messages -->
       <p class="settings__status" id="settings-status"></p>
     </section>
   </div>
 
   <!-- ═══════ TAB: Analytics ═══════ -->
+  <!-- Hidden by default. Shown when user clicks the Analytics tab button. -->
   <div class="tab-content" id="tab-analytics">
+    <!--
+      Stat Cards — 3-column grid showing key metrics.
+      Values are populated by JavaScript from chrome.storage.local.
+    -->
     <div class="analytics__cards">
       <div class="stat-card">
         <span class="stat-card__value" id="stat-switches-value">0</span>
@@ -113,22 +164,42 @@
       </div>
     </div>
 
+    <!--
+      7-Day Activity Chart
+      The chart container is empty — bars are created dynamically by JavaScript.
+      Each bar is a <div> with a height proportional to the day's activity.
+      Hover over a bar to see the exact count (CSS-only tooltip using ::after).
+    -->
     <section class="analytics__chart-section">
       <h3 class="analytics__chart-title">Last 7 Days</h3>
       <div class="analytics__chart" id="activity-chart"></div>
     </section>
 
+    <!--
+      Reset Button — Clears all analytics data.
+      Resets totalSwitches, totalCollapses, groupsUsage, and dailySwitches to zero/empty.
+    -->
     <div class="analytics__actions">
       <button class="btn btn--danger" id="btn-reset-stats">Reset All Stats</button>
       <p class="analytics__reset-status" id="reset-status"></p>
     </div>
   </div>
 
-  <!-- Footer -->
+  <!--
+    Footer — Shows the extension version.
+    The version is read from manifest.json by JavaScript:
+      chrome.runtime.getManifest().version
+    This way, you only update the version in one place (manifest.json).
+  -->
   <footer class="footer">
     <span class="footer__version" id="version-text"></span>
   </footer>
 
+  <!--
+    Script tag at the bottom of <body> ensures the DOM is fully loaded
+    before JavaScript tries to find elements with getElementById.
+    The script also uses DOMContentLoaded as an extra safety check.
+  -->
   <script src="popup.js"></script>
 </body>
 </html>
